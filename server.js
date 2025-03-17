@@ -13,7 +13,10 @@ const Food = require("./models/food.js");
 const Ingredient = require("./models/ingredient.js");
 const Recipe = require("./models/recipe.js");
 
+// Initialize controllers
 const authController = require("./controllers/auth.js");
+const recipesController = require("./controllers/recipe");
+const ingredientsController = require("./controllers/ingredient");
 
 const port = process.env.PORT ? process.env.PORT : "3000";
 
@@ -24,6 +27,12 @@ mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
+
+const isSignedIn = require("./middleware/is-signed-in.js");
+const passUserToView = require("./middleware/pass-user-to-view.js");
+app.use(passUserToView);
+app.use("/auth", authController);
+app.use(isSignedIn);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
@@ -50,7 +59,8 @@ app.get("/vip-lounge", (req, res) => {
   }
 });
 
-app.use("/auth", authController);
+app.use("/recipes", recipesController);
+app.use("/ingredients", ingredientsController);
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
