@@ -15,8 +15,8 @@ const Recipe = require("./models/recipe.js");
 
 // Initialize controllers
 const authController = require("./controllers/auth.js");
-const recipesController = require("./controllers/recipe");
-const ingredientsController = require("./controllers/ingredient");
+const recipesController = require("./controllers/recipes.js");
+const ingredientsController = require("./controllers/ingredients.js");
 
 const port = process.env.PORT ? process.env.PORT : "3000";
 
