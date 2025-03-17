@@ -39,6 +39,10 @@ app.use(
 
 app.use("/auth", authController);
 
+app.get("/unauthorized", (req, res) => {
+  res.render("unauthorized.ejs");
+});
+
 const isSignedIn = require("./middleware/isSignedin.js");
 const passUserToView = require("./middleware/passUserToView.js");
 
