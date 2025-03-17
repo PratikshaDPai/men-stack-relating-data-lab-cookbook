@@ -6,6 +6,7 @@
     <title>Edit Recipe</title>
   </head>
   <body>
+    <%- include('../partials/_navbar.ejs') %>
     <h1>Edit Recipe</h1>
     <form action="/recipes/<%= recipe._id %>?_method=PUT" method="POST">
       <input type="hidden" name="_method" value="PUT" />
