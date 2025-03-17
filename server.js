@@ -46,14 +46,14 @@ app.get("/unauthorized", (req, res) => {
 const isSignedIn = require("./middleware/isSignedin.js");
 const passUserToView = require("./middleware/passUserToView.js");
 
-app.use(isSignedIn);
-app.use(passUserToView);
-
 app.get("/", (req, res) => {
   res.render("index.ejs", {
     user: req.session.user,
   });
 });
+
+app.use(isSignedIn);
+app.use(passUserToView);
 
 app.get("/vip-lounge", (req, res) => {
   if (req.session.user) {
