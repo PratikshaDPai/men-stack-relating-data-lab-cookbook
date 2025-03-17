@@ -20,19 +20,19 @@ const ingredientsController = require("./controllers/ingredient");
 
 const port = process.env.PORT ? process.env.PORT : "3000";
 
-// Creating models
-
 mongoose.connect(process.env.MONGODB_URI);
 
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
-const isSignedIn = require("./middleware/is-signed-in.js");
-const passUserToView = require("./middleware/pass-user-to-view.js");
-app.use(passUserToView);
 app.use("/auth", authController);
+
+const isSignedIn = require("./middleware/isSignedin.js");
+const passUserToView = require("./middleware/passUserToView.js");
+
 app.use(isSignedIn);
+app.use(passUserToView);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
