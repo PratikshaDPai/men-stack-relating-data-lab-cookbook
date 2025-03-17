@@ -26,14 +26,6 @@ mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
-app.use("/auth", authController);
-
-const isSignedIn = require("./middleware/isSignedin.js");
-const passUserToView = require("./middleware/passUserToView.js");
-
-app.use(isSignedIn);
-app.use(passUserToView);
-
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 app.use(morgan("dev"));
@@ -44,6 +36,14 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+app.use("/auth", authController);
+
+const isSignedIn = require("./middleware/isSignedin.js");
+const passUserToView = require("./middleware/passUserToView.js");
+
+app.use(isSignedIn);
+app.use(passUserToView);
 
 app.get("/", (req, res) => {
   res.render("index.ejs", {
