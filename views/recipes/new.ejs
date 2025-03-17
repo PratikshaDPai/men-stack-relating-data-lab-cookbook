@@ -15,7 +15,51 @@
       <label for="instructions">Instructions:</label>
       <textarea id="instructions" name="instructions" required></textarea>
       <br />
+      <h3>Select Ingredients</h3>
+      <% ingredients.forEach(ingredient => { %>
+      <label>
+        <input
+          type="checkbox"
+          name="ingredients"
+          value="<%= ingredient._id %>"
+        />
+        <%= ingredient.name %>
+      </label>
+      <br />
+      <% }) %>
+
       <button type="submit">Create Recipe</button>
     </form>
+
+    <a href="/recipes">Cancel</a>
+
+    <script>
+      document
+        .getElementById("addIngredient")
+        .addEventListener("click", function () {
+          const newIngredientInput = document.getElementById("newIngredient");
+          const newIngredient = newIngredientInput.value.trim();
+          if (newIngredient) {
+            fetch("/ingredients", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ name: newIngredient }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data._id) {
+                  const ingredientsList = document.querySelector("form");
+                  const label = document.createElement("label");
+                  label.innerHTML = `<input type='checkbox' name='ingredients' value='${data._id}' checked /> ${data.name}`;
+                  ingredientsList.insertBefore(
+                    label,
+                    newIngredientInput.parentNode
+                  );
+                  newIngredientInput.value = "";
+                }
+              });
+          }
+        });
+    </script>
   </body>
 </html>

@@ -7,7 +7,9 @@
   </head>
   <body>
     <%- include('../partials/_navbar.ejs') %>
+
     <h1>Edit Recipe</h1>
+
     <form action="/recipes/<%= recipe._id %>?_method=PUT" method="POST">
       <input type="hidden" name="_method" value="PUT" />
 
@@ -26,6 +28,29 @@
 <%= recipe.instructions %></textarea
       >
       <br />
+
+      <h3>Ingredients</h3>
+      <% ingredients.forEach(ingredient => { %>
+      <label>
+        <% if (recipe.ingredients.includes(ingredient._id.toString())) { %>
+
+        <input
+          type="checkbox"
+          name="ingredients"
+          value="<%= ingredient._id %>"
+          checked
+        />
+
+        <% } else { %>
+        <input
+          type="checkbox"
+          name="ingredients"
+          value="<%= ingredient._id %>"
+        />
+        <%}%> <%= ingredient.name %>
+      </label>
+      <br />
+      <% }) %>
 
       <button type="submit">Update Recipe</button>
     </form>
