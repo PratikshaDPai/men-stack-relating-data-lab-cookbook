@@ -7,9 +7,17 @@ const methodOverride = require("method-override");
 const morgan = require("morgan");
 const session = require("express-session");
 
+// Initialize models
+const User = require("./models/user.js");
+const Food = require("./models/food.js");
+const Ingredient = require("./models/ingredient.js");
+const Recipe = require("./models/recipe.js");
+
 const authController = require("./controllers/auth.js");
 
 const port = process.env.PORT ? process.env.PORT : "3000";
+
+// Creating models
 
 mongoose.connect(process.env.MONGODB_URI);
 
